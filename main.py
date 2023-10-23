@@ -9,6 +9,9 @@ import time
 import re
 import json
 
+#Fix element not selecting when trying to select input text box for job search / location search
+
+
 class EasyApplyLinkedin:
 
     def __init__(self, data):
@@ -39,14 +42,14 @@ class EasyApplyLinkedin:
         """This function goes to the 'Jobs' section a looks for all the jobs that matches the keywords and location"""
 
         # go to Jobs
-        jobs_link = self.driver.find_element_by_link_text('Jobs')
+        jobs_link = self.driver.find_element(By.LINK_TEXT, "Jobs")
         jobs_link.click()
 
         # search based on keywords and location and hit enter
-        search_keywords = self.driver.find_element_by_css_selector(".jobs-search-box__text-input[aria-label='Search jobs']")
+        search_keywords = self.driver.find_element(By.CSS_SELECTOR, ".jobs-search-box__text-input[aria-label='Search by title, skill, or company']")
         search_keywords.clear()
         search_keywords.send_keys(self.keywords)
-        search_location = self.driver.find_element_by_css_selector(".jobs-search-box__text-input[aria-label='Search location']")
+        search_location = self.driver.find_element(By.CSS_SELECTOR, ".jobs-search-box__text-input[aria-label='City, state, or zip code']")
         search_location.clear()
         search_location.send_keys(self.location)
         search_location.send_keys(Keys.RETURN)
@@ -162,12 +165,13 @@ class EasyApplyLinkedin:
         self.login_linkedin()
         time.sleep(5)
         self.job_search()
-        time.sleep(5)
-        self.filter()
-        time.sleep(2)
-        self.find_offers()
-        time.sleep(2)
-        self.close_session()
+        time.sleep(15)
+        # time.sleep(7)
+        # self.filter()
+        # time.sleep(2)
+        # self.find_offers()
+        # time.sleep(2)
+        # self.close_session()
 
 
 if __name__ == '__main__':
